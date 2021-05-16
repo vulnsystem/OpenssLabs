@@ -5,12 +5,11 @@
 1. Start a openssl server in one console
 
 ```
-openssl s_server -accept 10000 -cert server.cert -key server.key -CAfile ca.cert -debug -tlsextdebug -tls1_2
+openssl s_server -accept 10000 -cert server.cert -key server.key -CAfile ca.cert -debug -tlsextdebug -tls1_2 -curves secp256k1
 ```
 
 2. Start a openssl client in another console
 
 ```
-openssl s_client -connect 0.0.0.0:10000 -cert client.cert -key client.key -CAfile ca.cert -tls1_2
+openssl s_client -connect 0.0.0.0:10000 -cert client.cert -key client.key -CAfile ca.cert -tls1_2 -curves secp256k1
 ```
-
