@@ -1,0 +1,3 @@
+openssl s_server -accept 10000 -cert server.cert -key server.key -CAfile ca.cert  -WWW -debug -tlsextdebug -tls1_2
+
+openssl s_client -connect 0.0.0.0:10000 -cert client.cert -key client.key -CAfile ca.cert -tls1_2
