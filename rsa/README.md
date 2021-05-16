@@ -1,7 +1,7 @@
 # Chain of trust
 Chain of certificate authorities verification
 
-![image](https://user-images.githubusercontent.com/16678393/115525236-7c232d00-a2c1-11eb-9f13-329bc3373cc1.png)
+![image](https://www.gitcoins.io/assets/images/asymmetric-overview-4b4225f21c160ad9a57edd113e730068.png)
 
 Certificate Authority - A chain of trust
 In reality, there’s a chain of certificate authorities.
