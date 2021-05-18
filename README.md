@@ -1,6 +1,6 @@
 # OpenssLabs
 
-[openssl](https://www.gitcoins.io/assets/images/openssl-685ed43c9e0088918381ee7415177c98.png)
+![openssl](https://www.gitcoins.io/assets/images/openssl-685ed43c9e0088918381ee7415177c98.png)
 
 The labs in the repository is to tell you how to create and verify certificates with openssl tool. 
 There are 6 labs:
