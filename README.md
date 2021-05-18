@@ -1,4 +1,4 @@
-# OpensslCertificateVerify
+# OpenssLabs
 The labs in the repository is to tell you how to create and verify certificates with openssl tool. There are 6 labs:
 
 1. [getting-started](https://www.gitcoins.io/docs/next/create-certificates): A detailed way to let you know how to cerate self-signed CA cert and server cert signed by CA's cert.
