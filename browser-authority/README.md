@@ -4,11 +4,11 @@
 
 This lab to show you how authority of web browser works. Please give star if it helpful. 
 
-## Generate server certificate
+## 1. Generate server certificate
 
 We will create the CA and server certificate which key type is rsa:4096. The detailed [source code](https://github.com/vulnsystem/OpensslCertificateVerify/browser-authority) have been push to this repository directory. Please give star if it helpful. The CA and server certificates will generate after you run the **gen.sh**.
 
-## Create a webpage
+## 2. Create a webpage
 In this repository directory, there is a index.html file in the same directory as gen.sh. The webpage will be loaded when browser send a request from server.
 
 ## Start openssl server
@@ -23,7 +23,7 @@ The useful options in this command:
 - WWW: Emulates a simple web server. It is very useful. The pages will be resolved relative to the current directory, for example if the URL https://localhost:20000/index.html is requested the file ./index.html will be loaded. 
 - debug and tlsextdebug: to show the detailed dump information of all traffic.
 
-## Send request
+## 3. Send request
 After server started successfully, we can use browser to send a request as following. 
 
 ```
@@ -38,12 +38,12 @@ There are two ways to open the index
 
 > After CA ceritificate added in the manager, the browser will trust all the server's certificate which signed by the CA's.
 
-## Add server cert in the manager
+## 4. Add server cert in the manager
 You can found the certificate manager is located at **about:preferences#privacy** in the firefox. And import the CA's cert to the manager.
 ![firefox-security-warning](https://www.gitcoins.io/assets/images/firefox-certificate-manager-e23623ff1b4afa3c3b4472c120195b4c.png)
 
 ## index.html loaded
 There is **Hello World** in the webpage.
 
-## More details
+## 5. More details
 The detailed information have been published in [gitcoins.io](https://www.gitcoins.io/docs/next/browser-authority). 
