@@ -6,7 +6,7 @@ This lab to show you how authority of web browser works. Please give star if it 
 
 ## Generate server certificate
 
-We will create the CA and server certificate which key type is rsa:4096. The detailed [source code](https://github.com/vulnsystem/OpensslCertificateVerify/browser-authority) have been push to github. Please star it when helpful. The CA and server certificates will generate after you run the **gen.sh**.
+We will create the CA and server certificate which key type is rsa:4096. The detailed [source code](https://github.com/vulnsystem/OpensslCertificateVerify/browser-authority) have been push to this repository directory. Please star it when helpful. The CA and server certificates will generate after you run the **gen.sh**.
 
 ## Create a webpage
 In this repository directory, there is a index.html file in the same directory as gen.sh. The webpage will be loaded when browser send a request from server.
