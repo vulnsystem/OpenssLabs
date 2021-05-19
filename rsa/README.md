@@ -3,7 +3,7 @@
 ![image](https://www.gitcoins.io/assets/images/asymmetric-overview-4b4225f21c160ad9a57edd113e730068.png)
 
 
-[To create and verify the certificates according the tutorial](https://www.gitcoins.io/docs/next/create-certificates)
+[To create and verify the certificates according to the tutorial](https://www.gitcoins.io/docs/next/create-certificates)
 
 > Copyright: the following content is totally copy from the [TECHSCHOOL](https://dev.to/techschoolguru/how-to-create-sign-ssl-tls-certificates-2aai).
 
