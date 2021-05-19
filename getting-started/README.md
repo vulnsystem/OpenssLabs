@@ -1,11 +1,12 @@
 # Getting started
 
+![openssl](https://www.gitcoins.io/assets/images/openssl-685ed43c9e0088918381ee7415177c98.png)
+
+
+
 [To create and verify the certificates according the tutorial](https://www.gitcoins.io/docs/next/create-certificates)
 
 > Copyright: the following content is totally copy from the [TECHSCHOOL](https://dev.to/techschoolguru/how-to-create-sign-ssl-tls-certificates-2aai).
-
-![openssl](https://www.gitcoins.io/assets/images/openssl-685ed43c9e0088918381ee7415177c98.png)
-
 
 Now let's create and verify the certificates with openssl.
 For the purpose of this tutorial, we won’t submit our Certificate Signing Request (CSR) to a real CA. Instead, we will play both roles: the certificate authority and the certificate applicant.
