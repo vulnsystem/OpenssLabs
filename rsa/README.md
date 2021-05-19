@@ -1,5 +1,4 @@
-# Chain of trust
-Chain of certificate authorities verification
+# Create and verify the RSA certification
 
 ![image](https://www.gitcoins.io/assets/images/asymmetric-overview-4b4225f21c160ad9a57edd113e730068.png)
 
