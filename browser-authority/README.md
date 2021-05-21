@@ -1,12 +1,12 @@
-# browser-authority
+# browser-authentication
 
 ![openssl](https://www.gitcoins.io/assets/images/openssl-685ed43c9e0088918381ee7415177c98.png)
 
-This lab to show you how authority of web browser works. Please give star if it helpful. 
+This lab to show you how authentication of web browser works. Please give star if it helpful. 
 
 ## 1. Generate server certificate
 
-We will create the CA and server certificate which key type is rsa:4096. The detailed [source code](https://github.com/vulnsystem/OpensslCertificateVerify/browser-authority) have been push to this repository directory. Please give star if it helpful. The CA and server certificates will generate after you run the **gen.sh**.
+We will create the CA and server certificate which key type is rsa:4096. The detailed [source code](https://github.com/vulnsystem/OpenssLabs/browser-authentication) have been push to this repository directory. Please give star if it helpful. The CA and server certificates will generate after you run the **gen.sh**.
 
 ## 2. Create a webpage
 In this repository directory, there is a index.html file in the same directory as gen.sh. The webpage will be loaded when browser send a request from server.
@@ -46,4 +46,4 @@ You can found the certificate manager is located at **about:preferences#privacy*
 There is **Hello World** in the webpage.
 
 ## 5. More details
-The detailed information have been published in [gitcoins.io](https://www.gitcoins.io/docs/next/browser-authority). 
+The detailed information have been published in [gitcoins.io](https://www.gitcoins.io/docs/next/browser-authentication). 
