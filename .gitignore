@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+.idea
+.nvmrc
+.docusaurus
+
+website/build/
+
+sync-api-docs/generatedComponentApiDocs.js
+sync-api-docs/extracted.json
