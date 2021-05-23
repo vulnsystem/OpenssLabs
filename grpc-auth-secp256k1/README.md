@@ -1,5 +1,7 @@
 
-Today we will learn how to secure the [gRPC connection using TLS](https://www.gitcoins.io/docs/next/grpc-auth-labs).
+> The lab is not successful, I am trying to fix it.
+
+Today we will learn how to secure the [gRPC connection with secp256k1](https://www.gitcoins.io/docs/next/grpc-auth-labs).
 
 ![grpc](https://www.gitcoins.io/assets/images/grpc-2b88fa6714071d12c164ea4cb2a00d14.svg)
 
@@ -21,29 +23,27 @@ There are 3 types of gRPC connections:
 In this article, we will learn to implement both server-side and mutual TLS in node. So let’s get started!
 Generate TLS certificates.
 
-## Generate CA and server certificates
+## Generate secp256k1 key and certificates
 
-First we write the [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-server-auth/credentials/gen.sh) script to generate TLS certificates.
+First we write the [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/credentials/gen.sh) script to generate EC **secp256k1** private key and TLS certificates.
 
 ```shell
-# 1. Generate server CA's private key and self-signed certificate
-openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout ca.key -out ca.cert -subj "/CN=localhost/emailAddress=ca@gmail.com"
+# 1. Generate EC private key and self-signed certificate
+openssl ecparam -genkey -out ca.key -name secp256k1 
+openssl req -x509 -new -key ca.key -out ca.cert -subj "/C=FR/ST=Occitanie/L=Toulouse/O=Tech School/OU=Education/CN=*.techschool.guru/emailAddress=root.guru@gmail.com"
 
 echo "CA's self-signed certificate"
 openssl x509 -in ca.cert -noout -text
 
-# 2. Generate web server's private key and certificate signing request (CSR)
-openssl req -newkey rsa:4096 -nodes -keyout server.key -out server.req -subj "/CN=localhost/emailAddress=server@gmail.com"
+# 2. Generate web server's private key and certificate signing request (EC)
+openssl ecparam -genkey -out server.key -name secp256k1 
+openssl req  -key server.key -new -out server.req -subj "/C=FR/ST=Ile de France/L=Paris/O=PC Book/OU=Computer/CN=*.pcbook.com/emailAddress=server@gmail.com"
 
 # 3. Use CA's private key to sign web server's CSR and get back the signed certificate
-openssl x509 -req -in server.req -days 60 -CA ca.cert -CAkey ca.key -CAcreateserial -out server.cert -extfile server-ext.cnf
+openssl x509 -req -in server.req -days 60 -CA ca.cert -CAkey ca.key -CAcreateserial -out server.cert -extfile server.ext
 
 echo "Server's signed certificate"
 openssl x509 -in server.cert -noout -text
-
-# 4. To verify the server certificate aginst by root CA
-echo "server's certificate verification"
-openssl verify -show_chain -CAfile ca.cert server.cert
 ```
 
 I encourage you to read my post about [how to create and sign TLS certificate](https://www.gitcoins.io/docs/next/create-certificates) to understand how this script works.
@@ -65,7 +65,7 @@ The generated files that we care about in this lab are:
 
 Next step, I will show you how to secure our gRPC connection with server-side TLS.
 
-Let’s open [greeter_server.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-server-auth/greeter_server.js) file. I will add ca and server certificates and sever private key to create TLS credentials.
+Let’s open [greeter_server.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/greeter_server.js) file. I will add ca and server certificates and sever private key to create TLS credentials.
 
 ```
 function main() {
@@ -100,7 +100,7 @@ Similar to what we did on the server, I also add a function to load TLS credenti
 
 The reason is, client needs to make sure that it’s the right server it wants to talk to. So server's cert will be verified against the CA's cert and the CA should be trusted by client.
 
-Let’s open [greeter_client.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-server-auth/greeter_client.js) file and add the trusted ca certificates to client.
+Let’s open [greeter_client.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/greeter_client.js) file and add the trusted ca certificates to client.
 
 ```
 var client = new hello_proto.Greeter(target,
@@ -119,28 +119,31 @@ This time the requests are successfully sent to the server. Perfect!
 
 ## Implement mutual TLS
 
-At the moment, the server has already shared its certificate with the client. For mutual TLS, the client also has to share its certificate with the server. So now let’s update this [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-client-auth/gen.sh) script to create and sign a certificate for the client.
+At the moment, the server has already shared its certificate with the client. For mutual TLS, the client also has to share its certificate with the server. So now let’s update this [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/gen.sh) script to create and sign a certificate for the client.
 
 ```shell
-# 4. Generate client's private key and certificate signing request (CSR)
-openssl req -newkey rsa:4096 -nodes -keyout client.key -out client.req -subj "/CN=localhost/emailAddress=client@gmail.com"
+# 4. Generate client's private key and certificate signing request (EC)
+openssl ecparam -genkey -out client.key -name secp256k1 
+openssl req -key client.key -new  -out client.req -subj "/C=FR/ST=Alsace/L=Strasbourg/O=PC Client/OU=Computer/CN=*.client.com/emailAddress=client@gmail.com"
 
-# 5. Use CA's private key to sign web server's CSR and get back the signed certificate
-openssl x509 -req -in client.req -days 60 -CA ca.cert -CAkey ca.key -CAcreateserial -out client.cert
+# 5. Use CA's private key to sign client's CSR and get back the signed certificate
+openssl x509 -req -in client.req -days 60 -CA ca.cert -CAkey ca.key -CAcreateserial -out client.cert -extfile client.ext
 
-echo "Client and Server's signed certificate"
-openssl x509 -in server.cert -noout -text
+echo "Client's signed certificate"
 openssl x509 -in client.cert -noout -text
 
 # 6. To verify the server certificate aginst by root CA
-echo "Client and server's certificate verification"
+echo "server's certificate verification"
 openssl verify -show_chain -CAfile ca.cert server.cert
+
+# 7. To verify the client certificate aginst by root CA.
+echo "client's certificate verification"
 openssl verify -show_chain -CAfile ca.cert client.cert
 ```
 
 Let’s say for this tutorial, we use the same CA to sign both server and client’s certificates. In the real world, we might have multiple clients with different certificates signed by different CAs.
 
-After the client’s certificate and private key are ready. To enable mutual TLS, on the server side [greeter_server.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-client-auth/greeter_server.js), we should change the ClientAuth field from False to True.
+After the client’s certificate and private key are ready. To enable mutual TLS, on the server side [greeter_server.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/greeter_server.js), we should change the ClientAuth field from False to True.
 
 ```
 function main() {
@@ -163,7 +166,7 @@ And we’re done with the server. Let’s run it in the terminal.
 
 Now if we connect the current client to this new server, it will fail because the server now also requires client to send its certificate.
 
-Let’s go to the client code [greeter_client.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-client-auth/greeter_client.js) to fix this. I will just copy the code to load certificate on the server side and change the file names to client.cert and client.key.Then we have to add the client certificate to the TLS config by setting the Certificates field, just like what we did on the server side.
+Let’s go to the client code [greeter_client.js](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/greeter_client.js) to fix this. I will just copy the code to load certificate on the server side and change the file names to client.cert and client.key.Then we have to add the client certificate to the TLS config by setting the Certificates field, just like what we did on the server side.
 
 ```
 var client = new hello_proto.Greeter(target,
