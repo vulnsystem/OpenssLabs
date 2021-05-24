@@ -119,7 +119,7 @@ This time the requests are successfully sent to the server. Perfect!
 
 ## Implement mutual TLS
 
-At the moment, the server has already shared its certificate with the client. For mutual TLS, the client also has to share its certificate with the server. So now let’s update this [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/gen.sh) script to create and sign a certificate for the client.
+At the moment, the server has already shared its certificate with the client. For mutual TLS, the client also has to share its certificate with the server. So now let’s update this [gen.sh](https://github.com/vulnsystem/OpenssLabs/blob/main/grpc-auth-secp256k1/credentials/gen.sh) script to create and sign a certificate for the client.
 
 ```shell
 # 4. Generate client's private key and certificate signing request (EC)
