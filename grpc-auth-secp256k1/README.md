@@ -1,5 +1,18 @@
 
-> The lab is not successful, I am trying to fix it.
+** The lab is not successful, I am trying to fix it.**
+
+```shell
+/grpc-auth-secp256k1/greeter_client.js:57
+    console.log('Greeting:', response.message);                                    ^
+
+TypeError: Cannot read property 'message' of undefined
+    at Object.callback (grpc-auth-secp256k1/greeter_client.js:57:39)
+    at Object.onReceiveStatus (grpc-auth-secp256k1/node_modules/@grpc/grpc-js/build/src/client.js:176:36)
+    at Object.onReceiveStatus (grpc-auth-secp256k1/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:342:141)
+    at Object.onReceiveStatus OpenssLabs/grpc-auth-secp256k1/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:305:181)
+    at grpc-auth-secp256k1/node_modules/@grpc/grpc-js/build/src/call-stream.js:124:78
+    at processTicksAndRejections (internal/process/task_queues.js:75:11)
+```
 
 Today we will learn how to secure the [gRPC connection with secp256k1](https://www.gitcoins.io/docs/next/grpc-auth-labs).
 
